@@ -178,10 +178,12 @@ bar {
 
 
 # bind firefox to alt+shift+2
-bindsym Mod4+2 exec /usr/bin/firefox
+bindsym Mod4+2 exec /usr/bin/firefox -p "default"
 bindsym $mod+Ctrl+8 exec "i3-msg 'workspace 8; exec /usr/bin/firefox -new-window music.google.com'"
 bindsym Mod4+3 exec /usr/bin/subl
 bindsym Mod4+4 exec /usr/bin/code
+# This is for hacking profile firefox
+bindsym Mod4+5 exec /usr/bin/firefox -p "ctf"
 
 # bind lock to win+l
 bindsym Mod4+l exec dm-tool lock
@@ -211,6 +213,9 @@ exec xinput set-prop 12 288 -0.3
 # set background
 exec feh --bg-center ~/.config/wallpaper4.jpg
 
+# Reduce sensitivity of my desktop mouse
+exec xinput --set-prop "pointer:Razer Razer DeathAdder Elite" "libinput Accel Speed" -0.5
+
 # add gestures
 exec libinput-gestures-setup start
 
@@ -219,7 +224,8 @@ exec /usr/bin/compton
 
 new_window pixel 1
 
-exec_always "xrandr --output DVI-I-1 --auto --primary --right-of HDMI-0"
+exec_always  "xrandr --output DisplayPort-0 --auto --right-of DisplayPort-1 --primary"
+#exec_always "xrandr --output HDMI-A-0 --auto --primary --right-of HDMI-0"
 exec_always "start-pulseaudio-x11"
 
 # Add custom dmenu snippet (snippy scripts)
