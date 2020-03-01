@@ -33,11 +33,11 @@ fi
 #setting up git bash prompt
 [ -f  /etc/bash_completion ] && source /etc/bash_completion
 
-# Note: PS1 and umask are already set in /etc/profile. You should not
+# Note: CUSTOM_PS1 and umask are already set in /etc/profile. You should not
 # need this unless you want different defaults for root.
-# PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
+# CUSTOM_PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
 
-#PS1='\u@\h:\w$(__git_ps1) \$ '
+#CUSTOM_PS1='\u@\h:\w$(__git_ps1) \$ '
 if id -u | grep -qw "0"; then
 	PS1_COLOR="31m" # Redish
 elif id -nG "$USER" | grep -qw "adm"; then
@@ -46,17 +46,18 @@ else
 	PS1_COLOR="36m" # Blueish
 fi
 
-PS1="\t " # prompt time
-PS1="$PS1\[\e[$PS1_COLOR\]"        # user color
-PS1="$PS1\u"                       # user name
-PS1="$PS1@"                        # add @ between user name and host
-PS1="$PS1\[$(cat ~/.host_color)\]" # set color with predefined colors (see above)
-PS1="$PS1\h"                       # host name
-PS1="$PS1\[\e[00;36m\]"            # blue color for directory
-PS1="$PS1[\w]"                     # working directory, inside '[' and ']'
-PS1="$PS1\$(__git_ps1)"             # add git info
-PS1="$PS1\[\e[37;00m\]"            # reset color
-PS1="$PS1\$ "                  # add $ and a space at the end
+CUSTOM_PS1="\t " # prompt time
+CUSTOM_PS1="$CUSTOM_PS1\[\e[$PS1_COLOR\]"        # user color
+CUSTOM_PS1="$CUSTOM_PS1\u"                       # user name
+CUSTOM_PS1="$CUSTOM_PS1@"                        # add @ between user name and host
+CUSTOM_PS1="$CUSTOM_PS1\[$(cat ~/.host_color)\]" # set color with predefined colors (see above)
+CUSTOM_PS1="$CUSTOM_PS1\h"                       # host name
+CUSTOM_PS1="$CUSTOM_PS1\[\e[00;36m\]"            # blue color for directory
+CUSTOM_PS1="$CUSTOM_PS1[\w]"                     # working directory, inside '[' and ']'
+CUSTOM_PS1="$CUSTOM_PS1\$(__git_ps1)"            # add git info
+CUSTOM_PS1="$CUSTOM_PS1\[\e[37;00m\]"            # reset color
+CUSTOM_PS1="$CUSTOM_PS1\$ "                      # add $ and a space at the end
+PS1="$CUSTOM_PS1"
 
 umask 022
 
@@ -214,6 +215,18 @@ man() {
 		man "$@"
 }
 
+function noprompt(){
+	PS1="$ "
+}
+
+function reprompt(){
+	PS1="$CUSTOM_PS1"
+}
+
+# dr mount your .bashrc file to the root user in the container.
+alias dr="docker run -it -v  ~/.bashrc:/root/.bashrc"
+
+
 # NODE PATH
 export PATH=$PATH:/opt/node-v5.1.1-linux-x64/bin/
 
@@ -230,6 +243,8 @@ export PROJECT_HOME=$HOME/Devel
 
 # PATH for Rust
 export PATH=$PATH:$HOME/.cargo/bin/
+# Path for pip (awscli for example)
+export PATH=$PATH:$HOME/.local/bin
 
 # source tools
 
