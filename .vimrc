@@ -34,7 +34,7 @@ set number
 set relativenumber
 
 " Yes, enable mouse point & click.
-set mouse="a"
+set mouse=a
 
 " set auto save on lost focus
 :au FocusLost * :wa
