@@ -190,9 +190,10 @@ bindsym Mod4+l exec dm-tool lock
 bindsym XF86MonBrightnessUp exec light -A 1
 bindsym XF86MonBrightnessDown exec light -U 1
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +2% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -2% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+set $sinkId $(pactl list sinks short | grep -i "hyperx" | cut -f1)
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $sinkId +2% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $sinkId -2% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sinkId toggle # mute sound
 
 # increase/decrease keyboard brightness
 bindsym XF86KbdBrightnessUp exec kbacklight up
@@ -224,7 +225,7 @@ exec /usr/bin/compton
 
 new_window pixel 1
 
-exec_always  "xrandr --output DisplayPort-0 --auto --right-of DisplayPort-1 --primary"
+exec_always  "xrandr --output DisplayPort-0 --auto --right-of DisplayPort-1 --primary --rate 144"
 #exec_always "xrandr --output HDMI-A-0 --auto --primary --right-of HDMI-0"
 exec_always "start-pulseaudio-x11"
 
