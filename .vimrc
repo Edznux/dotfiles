@@ -32,7 +32,9 @@ filetype plugin indent on    " required
 set nocompatible
 set number
 set relativenumber
-set mouse=""
+
+" Yes, enable mouse point & click.
+set mouse=a
 
 " set auto save on lost focus
 :au FocusLost * :wa
