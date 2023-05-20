@@ -1,13 +1,10 @@
-# misc PATH
-export PATH=$PATH:$HOME/install/trello-cli/bin
-
 if [ "$SSH_TTY" ]
 then
 	date=`date`
 	load=`cat /proc/loadavg | awk '{print $1}'`
 	root_usage=`df -h / | awk '/\// {print $(NF-1)}'`
 	memory_usage=`free -m | awk '/Mem/ { printf("%3.1f%%", $3/$2*100) }'`
-	swap_usage=`free -m | awk '/Swap/ { printf("%3.1f%%", $3/$2*100) }'`
+	#swap_usage=`free -m | awk '/Swap/ { printf("%3.1f%%", $3/$2*100) }'`
 	users=`users | wc -w`
 
 	echo "System information as of: $date"
@@ -16,7 +13,7 @@ then
 	printf "Usage on /:\t%s\tSwap usage:\t%s\n" $root_usage $swap_usage
 	printf "Local users:\t%s\n" $users
 	echo
-	trello show-cards -b general -l "TODO dev"
+	#trello show-cards -b general -l "TODO dev"
 fi
 
 # random color for each host
@@ -227,9 +224,6 @@ function reprompt(){
 alias dr="docker run -it -v  ~/.bashrc:/root/.bashrc"
 
 
-# NODE PATH
-export PATH=$PATH:/opt/node-v5.1.1-linux-x64/bin/
-
 # SET ENV VAR
 export EDITOR='vim'
 
@@ -246,6 +240,7 @@ export PATH=$PATH:$HOME/.cargo/bin/
 # Path for pip (awscli for example)
 export PATH=$PATH:$HOME/.local/bin
 
+export PATH=$PATH:$HOME/install/idea-IC-221.5591.52/bin
 # source tools
 
 ## z "jump cd" script.
@@ -261,4 +256,27 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 [ -f ~/.local/bin/virtualenvwrapper.sh ] && source ~/.local/bin/virtualenvwrapper.sh
 
-export GPG_TTY=$(tty)
+#export GPG_TTY=$(tty)
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+source /usr/share/doc/fzf/examples/key-bindings.bash   
+source /usr/share/bash-completion/completions/fzf
+
+# Scaleway CLI autocomplete initialization.
+eval "$(scw autocomplete script shell=bash)"
+
+
+unset GOOS;
+unset GOARCH;
+export GOROOT='/home/edznux/.gimme/versions/go1.20.linux.amd64';
+export PATH="/home/edznux/.gimme/versions/go1.20.linux.amd64/bin:${PATH}";
+go version >&2;
+
+export GIMME_ENV="/home/edznux/.gimme/envs/go1.20.env"

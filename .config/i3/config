@@ -181,7 +181,7 @@ bar {
 bindsym Mod4+2 exec /usr/bin/firefox -p "default"
 bindsym $mod+Ctrl+8 exec "i3-msg 'workspace 8; exec /usr/bin/firefox -new-window music.google.com'"
 bindsym Mod4+3 exec /usr/bin/subl
-bindsym Mod4+4 exec /usr/bin/code
+bindsym Mod4+4 exec /snap/bin/code
 # This is for hacking profile firefox
 bindsym Mod4+5 exec /usr/bin/firefox -p "ctf"
 
@@ -202,34 +202,44 @@ bindsym XF86KbdBrightnessDown exec kbacklight down
 bindsym $mod+Ctrl+9 exec "i3-msg 'workspace 9; exec slack; exec discord'"
 
 bindsym $mod+t floating toggle
+# LAPTOP CONFIG
 # enable tap to clic
 exec xinput set-prop 12 280 1
-
 # reverse scroll
 exec xinput set-prop 12 290 1
-
 # slower mouse movement
 exec xinput set-prop 12 288 -0.3
+
 
 # set background
 exec feh --bg-center ~/.config/wallpaper4.jpg
 
 # Reduce sensitivity of my desktop mouse
-exec xinput --set-prop "pointer:Razer Razer DeathAdder Elite" "libinput Accel Speed" -0.5
+exec xinput --set-prop "pointer:Razer Razer DeathAdder Elite" "libinput Accel Speed" -5
 
 # add gestures
 exec libinput-gestures-setup start
 
 #set transparency
-exec /usr/bin/compton
+#exec /usr/bin/compton
+
+# compton, no shaddows, daemonize
+exec compton -b --config ~/.config/.compton.conf
 
 new_window pixel 1
 
-exec_always  "xrandr --output DisplayPort-0 --auto --right-of DisplayPort-1 --primary --rate 144"
+exec_always  "xrandr --output DisplayPort-0 --auto --lef-of DisplayPort-1 --primary --rate 144"
 #exec_always "xrandr --output HDMI-A-0 --auto --primary --right-of HDMI-0"
 exec_always "start-pulseaudio-x11"
+exec_always "code /home/edznux/notes"
 
 # Add custom dmenu snippet (snippy scripts)
 bindsym $mod+b exec ~/dotfiles/scripts/snippy.sh
 bindsym $mod+n exec ~/dotfiles/scripts/snippy_1line.sh
 
+for_window [title="NOTES"] move to scratchpad
+bindsym $mod+Shift+n [title="NOTES"] scratchpad show
+
+exec --no-startup-id xset s off
+exec --no-startup-id xset -dpms
+exec --no-startup-id xset s noblank
