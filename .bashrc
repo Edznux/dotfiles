@@ -25,7 +25,7 @@ if [ ! -f ~/.host_color ]; then
 fi
 
 # docker alias
-[ -x "$(command -v docker)" ] && source ~/.dockerfunc
+#[ -x "$(command -v docker)" ] && source ~/.dockerfunc
 
 #setting up git bash prompt
 [ -f  /etc/bash_completion ] && source /etc/bash_completion
@@ -228,8 +228,8 @@ alias dr="docker run -it -v  ~/.bashrc:/root/.bashrc"
 export EDITOR='vim'
 
 # PATH FOR GOLANG
-export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+export PATH=$HOME/go/bin:$PATH
 
 # virtualenv....
 export WORKON_HOME=$HOME/.virtualenvs
@@ -239,6 +239,7 @@ export PROJECT_HOME=$HOME/Devel
 export PATH=$PATH:$HOME/.cargo/bin/
 # Path for pip (awscli for example)
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/bin
 
 export PATH=$PATH:$HOME/install/idea-IC-221.5591.52/bin
 # source tools
@@ -256,27 +257,20 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 [ -f ~/.local/bin/virtualenvwrapper.sh ] && source ~/.local/bin/virtualenvwrapper.sh
 
-#export GPG_TTY=$(tty)
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 source /usr/share/doc/fzf/examples/key-bindings.bash   
 source /usr/share/bash-completion/completions/fzf
 
-# Scaleway CLI autocomplete initialization.
-eval "$(scw autocomplete script shell=bash)"
 
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+eval "$(zoxide init bash)"
 
-unset GOOS;
-unset GOARCH;
-export GOROOT='/home/edznux/.gimme/versions/go1.20.linux.amd64';
-export PATH="/home/edznux/.gimme/versions/go1.20.linux.amd64/bin:${PATH}";
-go version >&2;
-
-export GIMME_ENV="/home/edznux/.gimme/envs/go1.20.env"
+. "$HOME/.cargo/env"

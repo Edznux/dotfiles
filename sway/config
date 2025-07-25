@@ -178,12 +178,9 @@ bar {
 
 
 # bind firefox to alt+shift+2
-bindsym Mod4+2 exec /usr/bin/firefox -p "default"
-bindsym $mod+Ctrl+8 exec "i3-msg 'workspace 8; exec /usr/bin/firefox -new-window music.google.com'"
-bindsym Mod4+3 exec /usr/bin/subl
-bindsym Mod4+4 exec /snap/bin/code
+bindsym Mod4+eacute exec /snap/bin/chromium -p "default"
+bindsym Mod4+apostrophe exec /snap/bin/code
 # This is for hacking profile firefox
-bindsym Mod4+5 exec /usr/bin/firefox -p "ctf"
 
 # bind lock to win+l
 bindsym Mod4+l exec dm-tool lock
@@ -226,7 +223,11 @@ exec libinput-gestures-setup start
 # compton, no shaddows, daemonize
 exec compton -b --config ~/.config/.compton.conf
 
-new_window pixel 1
+input * {
+    xkb_layout "fr"
+}
+
+default_border pixel 1
 
 exec_always  "xrandr --output DisplayPort-0 --auto --lef-of DisplayPort-1 --primary --rate 144"
 #exec_always "xrandr --output HDMI-A-0 --auto --primary --right-of HDMI-0"
